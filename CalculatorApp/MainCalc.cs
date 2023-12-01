@@ -12,6 +12,7 @@ namespace CalculatorApp
 {
     public partial class calcForm : Form
     {
+        private Operations operations = new Operations();
         public calcForm()
         {
             InitializeComponent();
@@ -21,7 +22,6 @@ namespace CalculatorApp
 
         private void calcForm_Load(object sender, EventArgs e)
         {
-
         }
 
         private void MainCalc_FormClosing(object sender, FormClosingEventArgs e)
@@ -197,6 +197,42 @@ namespace CalculatorApp
             tbDisplay.Text += btnPoint.Text;
 
             CheckAndAdjustFontSize();
+        }
+
+        private void btnEqual_Click(object sender, EventArgs e)
+        {
+            // Assuming tbDisplay.Text is in the format "num1+num2"
+            char[] operators = { '+', '-', 'x', '/' };
+
+            string[] operands = tbDisplay.Text.Split(operators, StringSplitOptions.RemoveEmptyEntries);
+
+            if (operands.Length == 2 && tbDisplay.Text.Any(c => operators.Contains(c)))
+            {
+                // Assuming the operator is the character between the operands
+                char operation = tbDisplay.Text.First(c => operators.Contains(c));
+
+                // Parse the operands
+                if (double.TryParse(operands[0], out double num1) &&
+                    double.TryParse(operands[1], out double num2))
+                {
+                    // Set the values in the Operations class
+                    operations.num1 = num1;
+                    operations.num2 = num2;
+                    operations.operation = operation.ToString();
+
+                    // Perform the calculation and update the display
+                    double result = operations.PerformCalculation();
+                    tbDisplay.Text = result.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid operands.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid expression.");
+            }
         }
     }
 }
