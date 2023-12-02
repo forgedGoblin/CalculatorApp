@@ -13,6 +13,7 @@ namespace CalculatorApp
     public partial class calcForm : Form
     {
         private Operations operations = new Operations();
+        private double previousAnswer = 0;
         public calcForm()
         {
             InitializeComponent();
@@ -89,7 +90,6 @@ namespace CalculatorApp
         }
 
         // Number buttons
-
         private void btnZero_Click(object sender, EventArgs e)
         {
             tbDisplay.SelectionAlignment = HorizontalAlignment.Right;
@@ -199,40 +199,56 @@ namespace CalculatorApp
             CheckAndAdjustFontSize();
         }
 
-        private void btnEqual_Click(object sender, EventArgs e)
+        private void btnClear_Click(object sender, EventArgs e)
         {
-            // Assuming tbDisplay.Text is in the format "num1+num2"
-            char[] operators = { '+', '-', 'x', '/' };
+            tbDisplay.Text = string.Empty;
+        }
 
-            string[] operands = tbDisplay.Text.Split(operators, StringSplitOptions.RemoveEmptyEntries);
+        private void btnOPar_Click(object sender, EventArgs e)
+        {
+            tbDisplay.SelectionAlignment = HorizontalAlignment.Right;
 
-            if (operands.Length == 2 && tbDisplay.Text.Any(c => operators.Contains(c)))
+            Button btnOpar = (Button)sender;
+            tbDisplay.Text += btnOpar.Text;
+
+            CheckAndAdjustFontSize();
+        }
+
+        private void btnCPar_Click(object sender, EventArgs e)
+        {
+            tbDisplay.SelectionAlignment = HorizontalAlignment.Right;
+
+            Button btnCPar = (Button)sender;
+            tbDisplay.Text += btnCPar.Text;
+
+            CheckAndAdjustFontSize();
+        }
+
+        private void btnPrevAnswer_Click(object sender, EventArgs e)
+        {
+            // check if there is a previous answer
+            if (previousAnswer != 0)
             {
-                // Assuming the operator is the character between the operands
-                char operation = tbDisplay.Text.First(c => operators.Contains(c));
-
-                // Parse the operands
-                if (double.TryParse(operands[0], out double num1) &&
-                    double.TryParse(operands[1], out double num2))
-                {
-                    // Set the values in the Operations class
-                    operations.num1 = num1;
-                    operations.num2 = num2;
-                    operations.operation = operation.ToString();
-
-                    // Perform the calculation and update the display
-                    double result = operations.PerformCalculation();
-                    tbDisplay.Text = result.ToString();
-                }
-                else
-                {
-                    MessageBox.Show("Invalid operands.");
-                }
+                tbDisplay.Text += previousAnswer.ToString();
             }
             else
             {
-                MessageBox.Show("Invalid expression.");
+                MessageBox.Show("There is no previous answer.");
             }
         }
+        private void btnEqual_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                double result = operations.Equals(tbDisplay.Text);
+                previousAnswer = result;
+                tbDisplay.Text = result.ToString();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
     }
 }
