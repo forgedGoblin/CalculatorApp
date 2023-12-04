@@ -150,12 +150,12 @@
             // 
             // btnMultiply
             // 
-            this.btnMultiply.Font = new System.Drawing.Font("Microsoft Sans Serif", 35F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnMultiply.Font = new System.Drawing.Font("Microsoft Sans Serif", 50F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMultiply.Location = new System.Drawing.Point(492, 484);
             this.btnMultiply.Name = "btnMultiply";
             this.btnMultiply.Size = new System.Drawing.Size(120, 120);
             this.btnMultiply.TabIndex = 15;
-            this.btnMultiply.Text = "x";
+            this.btnMultiply.Text = "*";
             this.btnMultiply.UseVisualStyleBackColor = true;
             this.btnMultiply.Click += new System.EventHandler(this.btnMultiply_Click);
             // 
@@ -241,6 +241,7 @@
             this.tbDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbDisplay.Location = new System.Drawing.Point(35, 20);
             this.tbDisplay.Name = "tbDisplay";
+            this.tbDisplay.ReadOnly = true;
             this.tbDisplay.Size = new System.Drawing.Size(577, 129);
             this.tbDisplay.TabIndex = 21;
             this.tbDisplay.Text = "";

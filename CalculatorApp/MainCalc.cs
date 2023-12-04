@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CalculatorApp
@@ -240,7 +234,7 @@ namespace CalculatorApp
         {
             try
             {
-                double result = operations.Equals(tbDisplay.Text);
+                double result = operations.EvaluateExpression(tbDisplay.Text);
                 previousAnswer = result;
                 tbDisplay.Text = result.ToString();
             }
@@ -249,6 +243,7 @@ namespace CalculatorApp
                 MessageBox.Show(ex.Message);
             }
         }
+
 
     }
 }
