@@ -25,7 +25,7 @@ namespace CalculatorApp
         }
         private void CheckAndAdjustFontSize()
         {
-            const int maxFontSize = 60, minFontSize = 45, maxTextLength = 9;
+            const int maxFontSize = 60, minFontSize = 50, maxTextLength = 9;
 
             if (tbDisplay.Text.Length > maxTextLength)
             {

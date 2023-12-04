@@ -5,6 +5,7 @@ namespace CalculatorApp
 {
     internal class Operations
     {
+        // binary expression tree class
         private class BinaryTreeNode
         {
             public string Value { get; set; }
@@ -12,21 +13,25 @@ namespace CalculatorApp
             public BinaryTreeNode Right { get; set; }
         }
 
+        // evaluator method
         public double EvaluateExpression(string expression)
         {
             try
             {
+                // build expression tree and evaluate
                 return EvaluateExpressionTree(BuildExpressionTree(expression));
             }
             catch (Exception ex)
             {
+                // exception handling for invalid mathematical expression
                 throw new ArgumentException("Invalid expression.", ex);
             }
         }
 
+        // build expression tree using recursion
         private BinaryTreeNode BuildExpressionTree(string expression)
         {
-            // First, handle parentheses
+            // first, handle parentheses
             int openParenIndex = expression.LastIndexOf('(');
 
             if (openParenIndex != -1)
@@ -35,22 +40,24 @@ namespace CalculatorApp
 
                 if (closeParenIndex != -1)
                 {
-                    // Extract the expression inside the parentheses
+                    // extract the expression inside the parentheses
                     string insideParenExpression = expression.Substring(openParenIndex + 1, closeParenIndex - openParenIndex - 1);
 
-                    // Replace the expression inside the parentheses with a placeholder
+                    // replace the expression inside the parentheses with a placeholder
                     string placeholder = Guid.NewGuid().ToString("N");
                     expression = expression.Replace($"({insideParenExpression})", placeholder);
 
-                    // Recursively build the expression tree with the replaced expression
+                    // recursively build the expression tree with the replaced expression
                     return BuildExpressionTree(expression.Replace(placeholder, EvaluateExpression(insideParenExpression).ToString()));
                 }
                 else
                 {
+                    // exception handler for mismatched parentheses
                     throw new ArgumentException("Mismatched parentheses.");
                 }
             }
 
+            // define operators
             char[] operators = { '+', '-', '*', '/' };
 
             // split expression into operands
@@ -59,7 +66,7 @@ namespace CalculatorApp
             // find the leftmost operator with the highest precedence
             int operatorIndex = FindLeftmostOperatorIndex(expression, operators);
 
-            // If there is an operator, split the expression and create a node
+            // ff there is an operator, split the expression and create a node
             if (operatorIndex != -1)
             {
                 string currentOperator = expression[operatorIndex].ToString();
@@ -75,18 +82,20 @@ namespace CalculatorApp
             }
             else
             {
-                // If there is no operator, this is a leaf node representing a number
+                // ff there is no operator, this is a leaf node representing a number
                 if (double.TryParse(expression, out double operand))
                 {
                     return new BinaryTreeNode { Value = operand.ToString() };
                 }
                 else
                 {
+                    // exception handling for invalid operands
                     throw new ArgumentException("Invalid operand.");
                 }
             }
         }
 
+        // helper method to find the leftmost operator with the highest precedence (following PEMDAS rule)
         private int FindLeftmostOperatorIndex(string expression, char[] operators)
         {
             int highestPrecedence = int.MaxValue;
@@ -97,7 +106,7 @@ namespace CalculatorApp
                 if (operators.Contains(expression[i]))
                 {
                     int precedence = GetOperatorPrecedence(expression[i]);
-                    if (precedence <= highestPrecedence)  // Change to <= to prioritize leftmost operators
+                    if (precedence <= highestPrecedence)  // prioritize leftmost operators
                     {
                         highestPrecedence = precedence;
                         operatorIndex = i;
@@ -108,6 +117,7 @@ namespace CalculatorApp
             return operatorIndex;
         }
 
+        // helper method to get the precedence of an operator
         private int GetOperatorPrecedence(char op)
         {
             switch (op)
@@ -123,16 +133,19 @@ namespace CalculatorApp
             }
         }
 
+        // recursive method to evaluate the expression tree
         private double EvaluateExpressionTree(BinaryTreeNode root)
         {
             if (root == null)
             {
-                return 0; // or throw an exception for an invalid tree
+                // return 0 for an invalid tree
+                return 0;
             }
 
             if (double.TryParse(root.Value, out double operand))
             {
-                return operand; // Leaf node, return the operand
+                // if leaf node, return the operand
+                return operand;
             }
 
             double leftResult = EvaluateExpressionTree(root.Left);
@@ -149,6 +162,7 @@ namespace CalculatorApp
                 case "/":
                     return leftResult / rightResult;
                 default:
+                    // exception handling for an invalid operator
                     throw new InvalidOperationException("Invalid operator.");
             }
         }
