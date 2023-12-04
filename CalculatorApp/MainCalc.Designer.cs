@@ -50,6 +50,7 @@
             this.btnCPar = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnOPar = new System.Windows.Forms.Button();
+            this.btnBackspace = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblDisplay
@@ -239,10 +240,10 @@
             // tbDisplay
             // 
             this.tbDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 60F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbDisplay.Location = new System.Drawing.Point(35, 20);
+            this.tbDisplay.Location = new System.Drawing.Point(104, 20);
             this.tbDisplay.Name = "tbDisplay";
             this.tbDisplay.ReadOnly = true;
-            this.tbDisplay.Size = new System.Drawing.Size(577, 129);
+            this.tbDisplay.Size = new System.Drawing.Size(508, 129);
             this.tbDisplay.TabIndex = 21;
             this.tbDisplay.Text = "";
             // 
@@ -290,11 +291,24 @@
             this.btnOPar.UseVisualStyleBackColor = true;
             this.btnOPar.Click += new System.EventHandler(this.btnOPar_Click);
             // 
+            // btnBackspace
+            // 
+            this.btnBackspace.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBackspace.Location = new System.Drawing.Point(35, 54);
+            this.btnBackspace.Name = "btnBackspace";
+            this.btnBackspace.Size = new System.Drawing.Size(63, 57);
+            this.btnBackspace.TabIndex = 26;
+            this.btnBackspace.Text = "<";
+            this.btnBackspace.UseCompatibleTextRendering = true;
+            this.btnBackspace.UseVisualStyleBackColor = true;
+            this.btnBackspace.Click += new System.EventHandler(this.btnBackspace_Click);
+            // 
             // calcForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(647, 926);
+            this.Controls.Add(this.btnBackspace);
             this.Controls.Add(this.btnPrevAnswer);
             this.Controls.Add(this.btnCPar);
             this.Controls.Add(this.btnClear);
@@ -349,6 +363,7 @@
         private System.Windows.Forms.Button btnCPar;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnOPar;
+        private System.Windows.Forms.Button btnBackspace;
     }
 }
 

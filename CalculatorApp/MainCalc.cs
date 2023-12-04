@@ -25,22 +25,22 @@ namespace CalculatorApp
         }
         private void CheckAndAdjustFontSize()
         {
-            const int maxFontSize = 60, minFontSize = 50, maxTextLength = 9;
+            const int maxFontSize = 60, minFontSize = 50, maxTextLength = 8;
 
             if (tbDisplay.Text.Length > maxTextLength)
             {
-                // Calculate the ratio of current length to the maximum length
+                // calculate the ratio of current length to the maximum length
                 float ratio = (float)tbDisplay.Text.Length / maxTextLength;
 
-                // Calculate the new font size within the specified range
+                // calculate the new font size within the specified range
                 int newFontSize = (int)(maxFontSize - ratio * (maxFontSize - minFontSize));
 
-                // Set the font size for the entire text in the TextBox
+                // set the font size for the entire text in the TextBox
                 tbDisplay.Font = new Font(tbDisplay.Font.FontFamily, newFontSize);
             }
         }
 
-        // Operation buttons
+        // OPERATION BUTTONS
         private void btnAdd_Click(object sender, EventArgs e)
         {
             tbDisplay.SelectionAlignment = HorizontalAlignment.Right;
@@ -82,8 +82,23 @@ namespace CalculatorApp
 
             CheckAndAdjustFontSize();
         }
+        private void btnEqual_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                double result = operations.EvaluateExpression(tbDisplay.Text);
+                previousAnswer = result;
+                tbDisplay.Text = result.ToString();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
-        // Number buttons
+            tbDisplay.Font = new Font(tbDisplay.Font.FontFamily, 60);
+        }
+
+        // NUMBER BUTTONS
         private void btnZero_Click(object sender, EventArgs e)
         {
             tbDisplay.SelectionAlignment = HorizontalAlignment.Right;
@@ -183,6 +198,8 @@ namespace CalculatorApp
 
             CheckAndAdjustFontSize();
         }
+
+        // OTHER BUTTONS
         private void btnPoint_Click(object sender, EventArgs e)
         {
             tbDisplay.SelectionAlignment = HorizontalAlignment.Right;
@@ -230,20 +247,15 @@ namespace CalculatorApp
                 MessageBox.Show("There is no previous answer.");
             }
         }
-        private void btnEqual_Click(object sender, EventArgs e)
+
+        private void btnBackspace_Click(object sender, EventArgs e)
         {
-            try
+            if (tbDisplay.Text.Length > 0)
             {
-                double result = operations.EvaluateExpression(tbDisplay.Text);
-                previousAnswer = result;
-                tbDisplay.Text = result.ToString();
-            }
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
+                // remove the recently added character
+                tbDisplay.Text = tbDisplay.Text.Substring(0, tbDisplay.Text.Length - 1);
             }
         }
-
 
     }
 }
