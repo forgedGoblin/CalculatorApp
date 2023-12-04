@@ -26,6 +26,31 @@ namespace CalculatorApp
 
         private BinaryTreeNode BuildExpressionTree(string expression)
         {
+            // First, handle parentheses
+            int openParenIndex = expression.LastIndexOf('(');
+
+            if (openParenIndex != -1)
+            {
+                int closeParenIndex = expression.IndexOf(')', openParenIndex);
+
+                if (closeParenIndex != -1)
+                {
+                    // Extract the expression inside the parentheses
+                    string insideParenExpression = expression.Substring(openParenIndex + 1, closeParenIndex - openParenIndex - 1);
+
+                    // Replace the expression inside the parentheses with a placeholder
+                    string placeholder = Guid.NewGuid().ToString("N");
+                    expression = expression.Replace($"({insideParenExpression})", placeholder);
+
+                    // Recursively build the expression tree with the replaced expression
+                    return BuildExpressionTree(expression.Replace(placeholder, EvaluateExpression(insideParenExpression).ToString()));
+                }
+                else
+                {
+                    throw new ArgumentException("Mismatched parentheses.");
+                }
+            }
+
             char[] operators = { '+', '-', '*', '/' };
 
             // split expression into operands
