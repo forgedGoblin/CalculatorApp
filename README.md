@@ -1,9 +1,12 @@
 # CalculatorApp
 
 ## Description
-CalculatorApp is a basic calculator application designed for performing arithmetic calculations. 
-It supports the four standard operations (addition, subtraction, multiplication, and division) and allows users to input mathematical expressions with parentheses. 
-The app follows the PEMDAS rule to evaluate expressions, ensuring accurate results.
+CalculatorApp is a meticulously crafted calculator application developed as a passion project to enhance proficiency in C# programming and strengthen fundamental programming skills. This project serves as a practical exploration of arithmetic operations, algorithmic design, and the implementation of mathematical rules in programming.
+
+The application provides a user-friendly interface for performing basic arithmetic calculations, supporting the four standard operations—addition, subtraction, multiplication, and division. It accommodates mathematical expressions with parentheses and adheres to the PEMDAS rule, ensuring precise and reliable results.
+
+As a continuous endeavor to improve coding expertise, CalculatorApp incorporates best practices in software development, creating a foundation for future enhancements and feature additions.
+
 
 ## Features
 - Supports addition, subtraction, multiplication, and division.
